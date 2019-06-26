@@ -196,3 +196,4 @@ trunk/aao.net/aao.web/log-*.txt
 trunk/DataImport/.vs/
 trunk/aao.net/aao.web/js/app.js
 log*.txt
+.vs/
