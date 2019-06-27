@@ -19,30 +19,20 @@ namespace BlazorClient.Pages
                 stateService = value;
                 if (stateService != null)
                 {
-                    stateService.OnStateChanged += () => StateHasChanged(); 
+                    stateService.OnStateChanged += () =>
+                    {
+                        CurrentCount = stateService.Counter;
+                        StateHasChanged();
+                    };
                 }
             }
         }
 
-        protected int currentCount => stateService.Counter;        
-
-        protected override void OnAfterRender()
-        {
-            var timer = new System.Timers.Timer(1000);
-            timer.Elapsed += Timer_Elapsed;
-            timer.Start();
-
-            base.OnAfterRender();
-        }
-
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            
-        }
+        protected int CurrentCount { get; set; }
 
         protected void IncrementCount()
         {
             stateService.IncrementCounter();
-        }
+        }        
     }
 }

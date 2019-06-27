@@ -1,0 +1,35 @@
+@page "/formvalidation"
+@inject Sotsera.Blazor.Toaster.IToaster Toaster
+@using BlazorShared.Models
+
+<h3>Form Validation</h3>
+
+<div class="container">
+
+    <EditForm Model="@person" OnValidSubmit="@HandleValidSubmit">
+
+        <p>
+            <label for="namer">Name: </label>
+            <InputText id="name" @bind-Value="@person.Name" />
+        </p>
+        <p>
+            <label for="namer">Phone: </label>
+            <InputText id="name" @bind-Value="@person.Phone" />
+        </p>
+
+        <button type="submit">Submit</button>
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    </EditForm>
+</div>
+
+@code {
+    private Person person = new Person();
+    private bool submitted = false;
+
+    void HandleValidSubmit()
+    {
+        Toaster.Success("Submitted!");
+    }
+}

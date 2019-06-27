@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using BlazorClient.Services;
+using Sotsera.Blazor.Toaster.Core.Models;
 
 namespace BlazorClient
 {
@@ -8,7 +9,15 @@ namespace BlazorClient
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IAppStateService, AppStateService>();
+            services
+                .AddToaster(config =>
+            {
+                //example customizations
+                config.PositionClass = Defaults.Classes.Position.TopRight;
+                config.PreventDuplicates = true;
+                config.NewestOnTop = false;
+            })
+                .AddSingleton<IAppStateService, AppStateService>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

@@ -1,0 +1,43 @@
+@page "/jsinterop"
+@inject Microsoft.JSInterop.IJSRuntime jsRuntime
+@using Microsoft.JSInterop
+
+<h3>JsInterop</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <button class="btn btn-primary" @onclick="@SayHiToJs">Say hi to JS</button>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-primary" @onclick="@CallCSMethod">Say hi to CS</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            @message
+        </div>
+    </div>
+</div>
+
+@code {
+protected static string message { get; set; }
+
+protected async Task SayHiToJs()
+{
+    var result = await jsRuntime.InvokeAsync<string>("sayHiFromJs");
+    Console.WriteLine($"JS says {result}");
+}
+
+    protected async Task CallCSMethod()
+    {
+        await jsRuntime.InvokeAsync<bool>("sayHiToCs");
+    }
+
+[JSInvokable]
+public static void CSCallBackMethod()
+{
+    Console.WriteLine("Function invoked from JS");
+    message = "C# function called from JavaScript";    
+}
+}
